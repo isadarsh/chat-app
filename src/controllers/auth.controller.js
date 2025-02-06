@@ -75,8 +75,17 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   //todo: it isn't verified logout, like one could do non existent account
   try {
-    res.cookie("jwt", "", { maxage: 0 });
-    res.status(200).json({ message: "Logged out successfuly" });
+    if (!req.cookies.jwt) {
+      return res.status(401).json({ message: "User is not logged in" });
+    }
+    // Clear JWT cookie properly
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Ensure secure flag is set in production
+      sameSite: "Strict",
+    });
+
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     console.log("Error in logout controller", error.message);
     res.status(500).json({ message: "Internal server error" });
