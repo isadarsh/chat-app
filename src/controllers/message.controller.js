@@ -40,7 +40,7 @@ export const sendMessage = async (req, res) => {
     try {
         const { text, image } = req.body;
         const { id: receiverId } = req.params;
-        const senderId = req.user._id;//1:25
+        const senderId = req.user._id;
 
         let imageUrl;
         if (image) {
