@@ -106,7 +106,7 @@ export const updateProfile = async (req, res) => {
     res.status(200).json({ message: "Profile-picture updated successfuly" }) //testing is due
     
   } catch (error) {
-    console.log("error while updating profile-pic", error.message);
+    console.log("error while updating profile-pic:", error.message);
     res.status(500).json({message: "Internal server error"})
   }
 }
